@@ -21,12 +21,14 @@ public class ProductController extends JFrame{
 		ProductView view = new ProductView();
 		fullProduct();
 		view.setProductList(productList);
-		JPanel panC = view.displayProducts();
+		JPanel panC = view.displayProducts(this);
+		JPanel panS = view.inputPurchase();
 		add(panC, "Center");
+		add(panS, "South");
 		
 		setTitle("음료자판기");
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
-		setBounds(100, 50, 600, 600);
+		setBounds(100, 20, 600, 700);
 		setVisible(true);
 	}
 
