@@ -1,16 +1,14 @@
 package vendingmachine.view;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.Scanner;
-
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -33,6 +31,8 @@ public class ProductView {
 	public JPanel displayProducts(JFrame frame) {
 		this.frame = frame;
 		JPanel panC = new JPanel(new GridLayout(3, 3));
+		JPanel pan = null;
+		JLabel lblPrice = null;
 		for (ProductVO vo : productList) {
 			ImageIcon icon = new ImageIcon("images/"+vo.getImageName()+".jpg");
 			JLabel lbl = new JLabel(icon);
@@ -40,7 +40,14 @@ public class ProductView {
 			lbl.setBackground(Color.WHITE);
 			lbl.addMouseListener(lblL);
 			lblList.add(lbl);
-			panC.add(lbl);
+			lblPrice = new JLabel(vo.getPrice() + "원", JLabel.CENTER);
+			lblPrice.setFont(new Font("중고딕", Font.BOLD, 15));
+			lblPrice.setOpaque(true);
+			lblPrice.setBackground(new Color(232, 217, 255));
+			pan = new JPanel(new BorderLayout());
+			pan.add(lbl, "Center");
+			pan.add(lblPrice, "South");
+			panC.add(pan);
 		}
 		return panC;
 	}
@@ -71,7 +78,7 @@ public class ProductView {
 					vo = productList.get(i);
 				}
 			}
-			JOptionPane.showMessageDialog(frame, "제품명: "+vo.getName()+", 제품가격: "+vo.getPrice()+"원");			
+//			JOptionPane.showMessageDialog(frame, "제품명: "+vo.getName()+", 제품가격: "+vo.getPrice()+"원");			
 		}
 	};
 	
