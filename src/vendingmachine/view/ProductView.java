@@ -1,5 +1,6 @@
 package vendingmachine.view;
 
+import java.awt.Color;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -24,9 +25,10 @@ public class ProductView {
 	ArrayList<ProductVO> productList;
 	ArrayList<JLabel> lblList = new ArrayList<JLabel>();
 	JTextField insertTf = new JTextField(10);
-	JLabel lblResult = new JLabel("제품이 나오는 곳");
+	JLabel lblResult = new JLabel("");
 	JFrame frame;
 	ProductVO vo;
+	JLabel eLbl;
 	
 	public JPanel displayProducts(JFrame frame) {
 		this.frame = frame;
@@ -34,6 +36,8 @@ public class ProductView {
 		for (ProductVO vo : productList) {
 			ImageIcon icon = new ImageIcon("images/"+vo.getImageName()+".jpg");
 			JLabel lbl = new JLabel(icon);
+			lbl.setOpaque(true);
+			lbl.setBackground(Color.WHITE);
 			lbl.addMouseListener(lblL);
 			lblList.add(lbl);
 			panC.add(lbl);
@@ -43,6 +47,7 @@ public class ProductView {
 	
 	public JPanel inputPurchase() {
 		JPanel panS = new JPanel();
+		panS.setBackground(Color.WHITE);
 		JLabel lblMoney = new JLabel("금액: ");
 		JButton btnInsert = new JButton("투입");
 		btnInsert.addActionListener(btnL);
@@ -59,9 +64,10 @@ public class ProductView {
 		
 		@Override
 		public void mouseClicked(MouseEvent e) {
-			
+			eLbl = (JLabel)e.getSource();
 			for (int i = 0; i < lblList.size(); i++) {
-				if(e.getSource() == lblList.get(i)) {
+				if(eLbl == lblList.get(i)) {
+					eLbl.setBackground(Color.MAGENTA);
 					vo = productList.get(i);
 				}
 			}
@@ -78,10 +84,16 @@ public class ProductView {
 //			금액이 부족하면 부족하다고 출력하여 다시 금액을 입력할 수 있게함
 			int money = Integer.parseInt(insertTf.getText());
 			if(money >= vo.getPrice()) {
-				lblResult.setText(vo.getName()+"제품 나옴, 거스름돈 "+(money-vo.getPrice())+"원");
+				ImageIcon icon = new ImageIcon("images/"+vo.getImageName()+".jpg");
+				lblResult.setIcon(icon);
+				JOptionPane.showMessageDialog(frame, "거스름돈: "+(money-vo.getPrice())+"원");
+//				lblResult.setText(vo.getName()+"제품 나옴, 거스름돈 "+(money-vo.getPrice())+"원");
 			}else {
-				lblResult.setText("금액이 부족합니다.");
+				JOptionPane.showMessageDialog(frame, "금액이 부족합니다.");
+//				lblResult.setText("금액이 부족합니다.");
 			}
+			insertTf.setText("");
+			eLbl.setBackground(Color.WHITE);
 		}
 	};
 }

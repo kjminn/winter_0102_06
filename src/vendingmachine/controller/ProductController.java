@@ -28,7 +28,7 @@ public class ProductController extends JFrame{
 		
 		setTitle("음료자판기");
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
-		setBounds(100, 20, 600, 700);
+		setBounds(100, 0, 500, 750);
 		setVisible(true);
 	}
 
